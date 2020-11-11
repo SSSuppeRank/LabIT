@@ -1,0 +1,51 @@
+body {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+header .logo img {
+    display: block;
+    margin: 0 auto;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.content {
+    margin: 0 auto;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.content>.content_block>.content_icon {
+    height: 240px;
+    background-color: blanchedalmond;
+}
+
+.content>.content_block>.content_title {
+    margin-top: 5%;
+    text-align: center;
+}
+
+.content>.content_block {
+    width: 240px;
+    margin: 1%;
+    display: inline-block;
+}
+
+.line {
+    border: solid black 1px;
+    background-color: black;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 1%;
+}
+
+canvas {
+    display: block;
+    margin: 0 auto;
+    border: solid black 1px;
+}
