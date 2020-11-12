@@ -48,7 +48,7 @@ function renderObjects() {
     }
 }
 
-function gameLogic() {
+function snakeMovement() {
     snakeX = snake[0].x;
     snakeY = snake[0].y;
 
@@ -59,17 +59,29 @@ function gameLogic() {
     if( dir == 3 ) snakeY -= unit;
     if( dir == 4 ) snakeY += unit;
 
-    snake.push( {
+    snake.unshift( {
         x: snakeX,
         y: snakeY
     } );
 }
 
-function render() {
-    renderObjects();
-    gameLogic();
+function objInteraction() {
+    if( snake[0].x == food.x && snake[0].y == food.y ) {
+        food.x = Math.floor( Math.random() * 30 ) * unit;
+        food.y = Math.floor( Math.random() * 20 ) * unit;
+        snake.push( {
+            x: snake[0].x,
+            y: snake[0].y
+        } );
+    }
 }
 
-setInterval( render, 1000 / 30 );
+function render() {
+    renderObjects();
+    snakeMovement();
+    objInteraction()
+}
+
+setInterval( render, 1000 / 20 );
 
 
