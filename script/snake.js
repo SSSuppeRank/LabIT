@@ -1,28 +1,75 @@
 var canvas = document.getElementById( 'game' );
 var ctx = canvas.getContext( '2d' );
 
-canvas.width = 480;
-canvas.height = 320;
+const unit = 16;
 
-ctx.fillStyle = "black";
-ctx.fillRect(0, 0, canvas.width, canvas.height);
+const map = {
+    w: 30,
+    h: 20
+};
 
-let unit = 16;
+canvas.width = map.w * unit;
+canvas.height = map.h * unit;
+
+let dir = 0;
+
+document.addEventListener( 'keydown', direction );
+
+function direction( event ) {
+    if( event.keyCode == 68 && dir != 2 ) dir = 1;
+    if( event.keyCode == 65 && dir != 1 ) dir = 2;
+    if( event.keyCode == 87 && dir != 4 ) dir = 3;
+    if( event.keyCode == 83 && dir != 3 ) dir = 4;
+}
 
 let food = {
     x: Math.floor( Math.random() * 30 ) * unit ,
     y: Math.floor( Math.random() * 20 ) * unit
 };
 
+let snake = [];
+
+snake[0] = {
+    x: ( map.w / 2 - 1 ) * unit,
+    y: ( map.h / 2 - 1 ) * unit
+};
+
 function renderObjects() {
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
     ctx.fillStyle = "red";
     ctx.fillRect( food.x, food.y, unit, unit );
+    
+    ctx.fillStyle = "green";
+
+    for( let i = 0; i < snake.length; i++ ) {
+        ctx.fillRect( snake[i].x, snake[i].y, unit, unit );
+    }
+}
+
+function gameLogic() {
+    snakeX = snake[0].x;
+    snakeY = snake[0].y;
+
+    snake.pop();
+
+    if( dir == 1 ) snakeX += unit;
+    if( dir == 2 ) snakeX -= unit;
+    if( dir == 3 ) snakeY -= unit;
+    if( dir == 4 ) snakeY += unit;
+
+    snake.push( {
+        x: snakeX,
+        y: snakeY
+    } );
 }
 
 function render() {
     renderObjects();
+    gameLogic();
 }
 
-setInterval( render, 1000 / 60 )
+setInterval( render, 1000 / 30 );
 
 
