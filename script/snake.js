@@ -3,6 +3,10 @@ var ctx = canvas.getContext( '2d' );
 
 const unit = 16;
 
+const gameEnd = new Image();
+
+gameEnd.src = "../LabIT/img/gameover.png";
+
 let gameOver = false;
 
 const map = {
@@ -73,6 +77,26 @@ function snakeMovement() {
 }
 
 function objInteraction() {
+    for( let i = 3; i < snake.length; i++ ) {
+        if( snake[0].x == snake[i].x && snake[0].y == snake[i].y ) {
+            if( snake[0].x != food.x && snake[0].y != food.y ) {
+                gameOver = true;
+                ctx.drawImage( gameEnd, 0, 0 );
+            }
+        }
+    }  
+    
+    for( let i = 1; i < snake.length; i++ ) {
+        if( snake[i].x == food.x && snake[i].y == food.y ) {
+            food.x = Math.floor( Math.random() * 30 ) * unit;
+            food.y = Math.floor( Math.random() * 20 ) * unit;
+            snake.push( {
+                x: snake[0].x,
+                y: snake[0].y
+            } );
+        }
+    }
+    
     if( snake[0].x == food.x && snake[0].y == food.y ) {
         food.x = Math.floor( Math.random() * 30 ) * unit;
         food.y = Math.floor( Math.random() * 20 ) * unit;
@@ -80,14 +104,6 @@ function objInteraction() {
             x: snake[0].x,
             y: snake[0].y
         } );
-    }
-
-    for( let i = 3; i < snake.length; i++ ) {
-        if( snake[0].x == snake[i].x && snake[0].y == snake[i].y ) {
-            if( snake[0].x != food.x && snake[0].y != food.y ) {
-                gameOver = true;
-            }
-        }
     }
 }
 
