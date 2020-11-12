@@ -3,6 +3,8 @@ var ctx = canvas.getContext( '2d' );
 
 const unit = 16;
 
+let gameOver = false;
+
 const map = {
     w: 30,
     h: 20
@@ -63,6 +65,11 @@ function snakeMovement() {
         x: snakeX,
         y: snakeY
     } );
+
+    if( snake[0].x == canvas.width ) snake[0].x = 0; 
+    else if( snake[0].y == canvas.height ) snake[0].y = 0; 
+    else if( snake[0].x == -unit ) snake[0].x = canvas.width;
+    else if( snake[0].y == -unit ) snake[0].y = canvas.height;
 }
 
 function objInteraction() {
@@ -74,12 +81,20 @@ function objInteraction() {
             y: snake[0].y
         } );
     }
+
+    for( let i = 3; i < snake.length; i++ ) {
+        if( snake[0].x == snake[i].x && snake[0].y == snake[i].y ) {
+            if( snake[0].x != food.x && snake[0].y != food.y ) {
+                gameOver = true;
+            }
+        }
+    }
 }
 
 function render() {
     renderObjects();
-    snakeMovement();
-    objInteraction()
+    if( !gameOver ) snakeMovement(); 
+    objInteraction();
 }
 
 setInterval( render, 1000 / 20 );
