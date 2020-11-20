@@ -3,6 +3,8 @@ var ctx = canvas.getContext( '2d' );
 
 const unit = 16;
 
+let score = 0;
+
 const gameEnd = new Image();
 
 gameEnd.src = "../LabIT/img/gameover.png";
@@ -52,6 +54,10 @@ function renderObjects() {
     for( let i = 0; i < snake.length; i++ ) {
         ctx.fillRect( snake[i].x, snake[i].y, unit, unit );
     }
+
+    ctx.fillStyle = "white";
+    ctx.font = "30px Arial";
+    ctx.fillText( score, 10, 30 );
 }
 
 function snakeMovement() {
@@ -90,16 +96,15 @@ function objInteraction() {
         if( snake[i].x == food.x && snake[i].y == food.y ) {
             food.x = Math.floor( Math.random() * 30 ) * unit;
             food.y = Math.floor( Math.random() * 20 ) * unit;
-            snake.push( {
-                x: snake[0].x,
-                y: snake[0].y
-            } );
         }
     }
     
     if( snake[0].x == food.x && snake[0].y == food.y ) {
         food.x = Math.floor( Math.random() * 30 ) * unit;
         food.y = Math.floor( Math.random() * 20 ) * unit;
+
+        score++;
+
         snake.push( {
             x: snake[0].x,
             y: snake[0].y
